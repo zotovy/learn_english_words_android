@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import dev.zotov.database.dao.WordDao
-import dev.zotov.database.entities.Word
+import dev.zotov.database.entities.WordDBO
 
 class AppDatabase internal constructor(private val database: RoomAppDatabase) {
     val wordDao: WordDao
@@ -13,7 +13,7 @@ class AppDatabase internal constructor(private val database: RoomAppDatabase) {
 }
 
 
-@Database(entities = [Word::class], version = 1)
+@Database(entities = [WordDBO::class], version = 1)
 internal abstract class RoomAppDatabase : RoomDatabase() {
 
     abstract fun wordDao(): WordDao

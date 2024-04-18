@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "words")
-data class Word(
+data class WordDBO(
     @PrimaryKey val uid: Long,
     @ColumnInfo(name = "english") val english: String,
     @ColumnInfo(name = "russian") val russian: String,

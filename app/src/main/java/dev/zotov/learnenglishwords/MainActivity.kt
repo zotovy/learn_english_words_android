@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dev.zotov.database.AppDatabase
+import dev.zotov.words_data.WordsRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,11 +24,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val words = AppDatabase(this@MainActivity)
-                .wordDao
-                .getRandomWords(5)
+            val database = AppDatabase(this@MainActivity)
+            val wordsRepository = WordsRepositoryImpl(database)
 
-            Log.d("WORDS", words.toString())
+            Log.d("WORDS", wordsRepository.getFiveQuestions().toString())
         }
     }
 }

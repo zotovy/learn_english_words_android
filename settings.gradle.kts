@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "LearnEnglishWords"
 include(":app")
 include(":database")
+include(":words-data")
