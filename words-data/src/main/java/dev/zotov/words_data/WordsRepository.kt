@@ -1,6 +1,5 @@
 package dev.zotov.words_data
 
-import android.util.Log
 import dev.zotov.database.AppDatabase
 import dev.zotov.words_api.WordsApi
 import dev.zotov.words_data.models.WordDefinition
@@ -11,7 +10,6 @@ import dev.zotov.words_data.utils.toWordDefinitionDBO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.util.logging.Logger
 
 interface WordsRepository {
 
