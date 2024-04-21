@@ -28,7 +28,7 @@ class AppDatabase internal constructor(private val database: RoomAppDatabase) {
     version = 1
 )
 @TypeConverters(WordMeaningDBOTypeConverter::class)
-abstract class RoomAppDatabase : RoomDatabase() {
+internal abstract class RoomAppDatabase : RoomDatabase() {
 
     abstract fun wordDao(): WordDao
 

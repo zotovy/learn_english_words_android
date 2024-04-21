@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.hiltPlugin)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -18,7 +20,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "WORDS_API_BASE_URL", "\"https://api.dictionaryapi.dev\"")
+        }
+
         release {
+            buildConfigField("String", "WORDS_API_BASE_URL", "\"https://api.dictionaryapi.dev\"")
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -33,6 +41,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -45,6 +56,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     implementation(project(":database"))
     implementation(project(":words-data"))

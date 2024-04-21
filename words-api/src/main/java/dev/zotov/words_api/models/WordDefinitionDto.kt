@@ -10,8 +10,8 @@ data class WordDefinitionDto(
 ) {
     @Serializable
     data class Phonetic(
-        val audio: String?,
-        val text: String?,
+        val audio: String? = null,
+        val text: String? = null,
     )
 
     @Serializable

@@ -6,14 +6,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import dev.zotov.database.AppDatabase
-import dev.zotov.words_api.WordsApi
-import dev.zotov.words_data.WordsRepositoryImpl
+import dagger.hilt.android.AndroidEntryPoint
+import dev.zotov.words_data.WordsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var wordsRepository: WordsRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,16 +30,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val api = WordsApi("https://api.dictionaryapi.dev")
-            val database = AppDatabase(this@MainActivity)
-            val repository = WordsRepositoryImpl(database, api)
-
-            try {
-                val definition = repository.getWordDefinition("beer")
-                Log.d("def", definition.toString())
-            } catch (e: Throwable) {
-                Log.e("DEF", e.toString())
-            }
+            val word = wordsRepository.getWordDefinition("adasdasd")
+            Log.d("word", word.toString())
         }
     }
 }

@@ -1,5 +1,6 @@
 package dev.zotov.words_data
 
+import android.util.Log
 import dev.zotov.database.AppDatabase
 import dev.zotov.words_api.WordsApi
 import dev.zotov.words_data.models.WordDefinition
@@ -10,6 +11,7 @@ import dev.zotov.words_data.utils.toWordDefinitionDBO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import javax.inject.Inject
 
 interface WordsRepository {
 
@@ -18,10 +20,15 @@ interface WordsRepository {
     suspend fun getWordDefinition(word: String): WordDefinition?
 }
 
-class WordsRepositoryImpl(
+class WordsRepositoryImpl @Inject constructor(
     private val appDatabase: AppDatabase,
     private val wordsApi: WordsApi
 ) : WordsRepository {
+
+    companion object {
+        private const val TAG = "WordsRepository"
+    }
+
     override suspend fun getFiveQuestions(): List<WordQuestion> {
         val wordQuestions = coroutineScope {
             (1..5).map {
@@ -33,19 +40,22 @@ class WordsRepositoryImpl(
     }
 
     override suspend fun getWordDefinition(word: String): WordDefinition? {
-        // Cached
-        val cached = getCachedWordDefinition(word)
-        if (cached != null) {
-            return cached
-        }
+        try {
+            // Cached
+            val cached = getCachedWordDefinition(word)
+            if (cached != null) {
+                return cached
+            }
 
-        // Network
-        val wordDefinition = getNetworkWordDefinition(word)
-        if (wordDefinition != null) {
-            saveWordDefinitionInToCache(wordDefinition)
-            return wordDefinition
+            // Network
+            val wordDefinition = getNetworkWordDefinition(word)
+            if (wordDefinition != null) {
+                saveWordDefinitionInToCache(wordDefinition)
+                return wordDefinition
+            }
+        } catch (e: Throwable) {
+            Log.e(TAG, "Failed to get definition for word '$word'", e)
         }
-
         return null
     }
 
