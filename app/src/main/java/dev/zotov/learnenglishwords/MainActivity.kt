@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val word = wordsRepository.getWordDefinition("adasdasd")
-            Log.d("word", word.toString())
+            val questions = wordsRepository.getFiveQuestions()
+            Log.d("q", questions.toString())
         }
     }
 }

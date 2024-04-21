@@ -12,6 +12,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
+import kotlin.random.Random
 
 interface WordsRepository {
 
@@ -61,9 +62,18 @@ class WordsRepositoryImpl @Inject constructor(
 
     private suspend fun getQuestion(): WordQuestion {
         val words = appDatabase.wordDao.getRandomWords(5)
+
+        // Choose target word and variants
+        val targetWord =  words.first().toWord()
+        val variants = words.subList(1, words.size - 1).map { it.toWord() }.toMutableList()
+
+        // Insert correct word translation to random position in variants
+        val position = Random.nextInt(variants.size + 1)
+        variants.add(position, targetWord)
+
         return WordQuestion(
-            targetWord = words.first().toWord(),
-            variants = words.subList(1, words.size - 1).map { it.toWord() }
+            targetWord = targetWord,
+            variants = variants,
         )
     }
 
