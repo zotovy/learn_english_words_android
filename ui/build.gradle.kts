@@ -1,32 +1,21 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.hiltPlugin)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "dev.zotov.learnenglishwords"
+    namespace = "dev.zotov.ui"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.zotov.learnenglishwords"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        debug {
-            buildConfigField("String", "WORDS_API_BASE_URL", "\"https://api.dictionaryapi.dev\"")
-        }
-
         release {
-            buildConfigField("String", "WORDS_API_BASE_URL", "\"https://api.dictionaryapi.dev\"")
-
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -41,10 +30,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        buildConfig = true
-        viewBinding = true
-    }
 }
 
 dependencies {
@@ -52,17 +37,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    implementation(project(":database"))
-    implementation(project(":words-data"))
-    implementation(project(":words-api"))
-    implementation(project(":features:word-game"))
 }

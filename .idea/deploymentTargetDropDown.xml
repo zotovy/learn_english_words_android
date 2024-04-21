@@ -18,6 +18,18 @@
           <timeTargetWasSelectedWithDropDown value="2024-04-18T09:23:02.330365Z" />
         </State>
       </entry>
+      <entry key="features.word-game">
+        <State />
+      </entry>
+      <entry key="features.word-game-wrong">
+        <State />
+      </entry>
+      <entry key="word-game">
+        <State />
+      </entry>
+      <entry key="wordgame">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
