@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dev.zotov.database.AppDatabase
+import dev.zotov.words_api.WordsApi
 import dev.zotov.words_data.WordsRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +25,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
+            val api = WordsApi("https://api.dictionaryapi.dev")
             val database = AppDatabase(this@MainActivity)
-            val wordsRepository = WordsRepositoryImpl(database)
+            val repository = WordsRepositoryImpl(database, api)
 
-            Log.d("WORDS", wordsRepository.getFiveQuestions().toString())
+            try {
+                val definition = repository.getWordDefinition("beer")
+                Log.d("def", definition.toString())
+            } catch (e: Throwable) {
+                Log.e("DEF", e.toString())
+            }
         }
     }
 }

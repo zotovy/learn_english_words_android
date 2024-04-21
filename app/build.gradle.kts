@@ -48,4 +48,5 @@ dependencies {
 
     implementation(project(":database"))
     implementation(project(":words-data"))
+    implementation(project(":words-api"))
 }

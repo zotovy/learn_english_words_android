@@ -42,6 +42,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.ktx.coroutines.core)
+    implementation(libs.retrofit)
 
     implementation(project(":database"))
+    implementation(project(":words-api"))
 }

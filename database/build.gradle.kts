@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 android {
@@ -43,4 +44,6 @@ dependencies {
 
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
+
+    implementation(libs.ktx.serialization)
 }

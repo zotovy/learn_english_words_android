@@ -23,3 +23,4 @@ rootProject.name = "LearnEnglishWords"
 include(":app")
 include(":database")
 include(":words-data")
+include(":words-api")
