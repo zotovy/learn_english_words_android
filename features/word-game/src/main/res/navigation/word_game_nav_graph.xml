@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/word_game_nav_graph"
+    app:startDestination="@id/wordGameFragment">
+    <fragment
+        android:id="@+id/wordGameFragment"
+        android:name="dev.zotov.features.word_game.word_game.WordGameFragment"
+        android:label="fragment_word_game"
+        tools:layout="@layout/fragment_word_game">
+        <action
+            android:id="@+id/action_wordGameFragment_to_wordGameResultFragment"
+            app:destination="@id/wordGameResultFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/wordGameResultFragment"
+        android:name="dev.zotov.features.word_game.word_game_result.WordGameResultFragment"
+        android:label="WordGameResultFragment"
+        tools:layout="@layout/fragment_word_game_result">
+        <argument
+            android:name="result"
+            app:argType="dev.zotov.features.word_game.models.WordGameResult" />
+    </fragment>
+</navigation>

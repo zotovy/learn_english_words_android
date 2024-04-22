@@ -7,4 +7,6 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinJvm) apply false
     alias(libs.plugins.kotlinxSerialization) apply false
     alias(libs.plugins.hiltPlugin) apply false
+    alias(libs.plugins.ktxParselize) apply false
+    alias(libs.plugins.navSafeArgs) apply false
 }

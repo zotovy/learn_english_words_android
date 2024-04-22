@@ -18,6 +18,8 @@ ktxSerialization = "1.6.3"
 hilt = "2.51.1"
 lifecycle = "2.7.0"
 androidFragment = "1.6.2"
+nav = "2.7.7"
+ktxParcelize = "2.0.0-RC1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +32,9 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidFragment" }
+
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "nav" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "nav" }
 
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -53,4 +58,6 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ktxParselize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+navSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "nav" }
 

@@ -1,4 +1,4 @@
-package dev.zotov.features.word_game
+package dev.zotov.features.word_game.word_game
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.zotov.features.word_game.models.WordGameResult
 import dev.zotov.words_data.WordsRepository
 import dev.zotov.words_data.models.Word
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.min
-
 
 @HiltViewModel
 class WordGameViewModel @Inject constructor(
@@ -24,6 +24,8 @@ class WordGameViewModel @Inject constructor(
 
     private val _state = MutableLiveData<WordGameState>(WordGameState.Loading)
     val state: LiveData<WordGameState> get() = _state
+
+    private val _answers = mutableListOf<WordGameResult.Answer>()
 
     fun initialize() {
         viewModelScope.launch {
@@ -44,6 +46,14 @@ class WordGameViewModel @Inject constructor(
     fun skipQuestion() {
         val currentState = _state.value
         if (currentState is WordGameState.Idle) {
+            _answers.add(
+                WordGameResult.Answer(
+                    english = currentState.currentQuestion.targetWord.english,
+                    russian = null,
+                    correct = false,
+                )
+            )
+
             _state.value = currentState.copy(
                 currentQuestionIndex = min(
                     currentState.currentQuestionIndex + 1,
@@ -57,15 +67,40 @@ class WordGameViewModel @Inject constructor(
     fun selectVariant(word: Word) {
         val currentState = _state.value
         if (currentState is WordGameState.Idle && currentState.currentQuestionState is WordVariantState.Idle) {
+            val isCorrect = word == currentState.currentQuestion.targetWord
+
             _state.value = currentState.copy(
                 currentQuestionState = word.let {
-                    if (it == currentState.currentQuestion.targetWord) {
+                    if (isCorrect) {
                         WordVariantState.Correct(it)
                     } else {
                         WordVariantState.InCorrect(it)
                     }
                 },
             )
+
+            _answers.add(
+                WordGameResult.Answer(
+                    english = word.english,
+                    russian = word.russian,
+                    correct = isCorrect,
+                )
+            )
         }
     }
+
+    val gameResult: WordGameResult?
+        get() {
+            val currentState = state.value
+
+            if (currentState is WordGameState.Idle) {
+                return WordGameResult(
+                    score = _answers.count { it.correct },
+                    maxScore = currentState.wordQuestions.size,
+                    answers = _answers.toList(),
+                )
+            }
+
+            return null
+        }
 }

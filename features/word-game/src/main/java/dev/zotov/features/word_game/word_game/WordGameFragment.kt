@@ -1,4 +1,4 @@
-package dev.zotov.features.word_game
+package dev.zotov.features.word_game.word_game
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -11,7 +11,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentWordGameBinding
 import dev.zotov.features.word_game.ui.GameProgressBarFragment
 import dev.zotov.ui.utils.setMargin
@@ -70,6 +72,19 @@ class WordGameFragment : Fragment() {
             } else {
                 updateWordVariant(index, word, state.currentQuestionState)
             }
+        }
+
+        if (state.isLast) {
+            viewModel.gameResult?.let { gameResult ->
+                binding.skipButton.setOnClickListener {
+                    findNavController().navigate(
+                        WordGameFragmentDirections.actionWordGameFragmentToWordGameResultFragment(
+                            result = gameResult
+                        )
+                    )
+                }
+            }
+
         }
 
         binding.progressBar.isVisible = false

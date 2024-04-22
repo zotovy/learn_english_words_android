@@ -1,4 +1,4 @@
-package dev.zotov.features.word_game
+package dev.zotov.features.word_game.word_game
 
 import dev.zotov.words_data.models.Word
 import dev.zotov.words_data.models.WordQuestion
@@ -12,6 +12,8 @@ sealed class WordGameState {
         val currentQuestionState: WordVariantState,
     ): WordGameState() {
         val currentQuestion: WordQuestion get() = wordQuestions[currentQuestionIndex]
+
+        val isLast: Boolean get() = currentQuestionIndex == wordQuestions.size - 1
     }
 
     data object Error: WordGameState()
