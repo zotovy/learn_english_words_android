@@ -13,6 +13,7 @@
     <color name="gray_300">#D0D5DD</color>
 
     <color name="error_600">#D92D20</color>
+    <color name="error_500">#F04438</color>
     <color name="error_300">#FDA29B</color>
 
     <color name="success_500">#12B76A</color>
@@ -20,4 +21,6 @@
 
     <color name="shadow_secondary">#05101828</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="white_ripple">#E7E8EA</color>
 </resources>

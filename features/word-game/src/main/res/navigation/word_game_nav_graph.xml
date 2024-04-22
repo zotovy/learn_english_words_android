@@ -15,7 +15,9 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/wordGameFragment" />
     </fragment>
     <fragment
         android:id="@+id/wordGameResultFragment"
@@ -25,5 +27,14 @@
         <argument
             android:name="result"
             app:argType="dev.zotov.features.word_game.models.WordGameResult" />
+        <action
+            android:id="@+id/action_wordGameResultFragment_to_wordGameFragment"
+            app:destination="@id/wordGameFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/wordGameResultFragment" />
     </fragment>
 </navigation>

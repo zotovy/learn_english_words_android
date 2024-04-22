@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -16,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentWordGameBinding
 import dev.zotov.features.word_game.ui.GameProgressBarFragment
+import dev.zotov.ui.utils.capitalizeWord
 import dev.zotov.ui.utils.setMargin
 import dev.zotov.ui.utils.toPx
 import dev.zotov.words_data.models.Word
@@ -27,11 +30,15 @@ class WordGameFragment : Fragment() {
 
     private val viewModel: WordGameViewModel by viewModels()
 
+    private lateinit var sheetAnimation: Animation
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWordGameBinding.inflate(inflater)
+        sheetAnimation =
+            AnimationUtils.loadAnimation(requireContext(), R.anim.answer_sheet_animation)
         return binding.root
     }
 
@@ -51,6 +58,14 @@ class WordGameFragment : Fragment() {
         binding.skipButton.setOnClickListener {
             viewModel.skipQuestion()
         }
+
+        binding.correctBottomSheet.continueButton.setOnClickListener {
+            viewModel.nextQuestion()
+        }
+
+        binding.incorrectBottomSheet.continueButton.setOnClickListener {
+            viewModel.nextQuestion()
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -61,7 +76,7 @@ class WordGameFragment : Fragment() {
 
         // Target word
         state.currentQuestion.targetWord.let {
-            binding.targetWord.text = it.english
+            binding.targetWord.text = it.english.capitalizeWord()
             binding.targetWordConjunction.text = it.conjunction
         }
 
@@ -88,6 +103,13 @@ class WordGameFragment : Fragment() {
             }
         }
 
+        // Question state
+        when (state.currentQuestionState) {
+            is WordVariantState.Correct -> showCorrectSheet()
+            is WordVariantState.InCorrect -> showIncorrectSheet()
+            is WordVariantState.Idle -> hideSheets()
+        }
+
         binding.progressBar.isVisible = false
         binding.gameProgressBar.isVisible = true
         binding.targetWord.isVisible = true
@@ -101,6 +123,8 @@ class WordGameFragment : Fragment() {
         binding.gameProgressBar.isVisible = false
         binding.targetWord.isVisible = false
         binding.targetWordConjunction.isVisible = false
+        binding.wordsVariants.isVisible = false
+        binding.skipButton.isVisible = false
     }
 
     private fun handleErrorState(state: WordGameState.Error) {
@@ -119,12 +143,13 @@ class WordGameFragment : Fragment() {
         }
 
         variantView.findViewById<TextView>(R.id.word_variant_number).text = number.toString()
-        variantView.findViewById<TextView>(R.id.word_variant).text = word.russian
+        variantView.findViewById<TextView>(R.id.word_variant).text = word.russian.capitalizeWord()
         variantView.setMargin(bottom = requireContext().toPx(16))
 
         binding.wordsVariants.addView(variantView)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateWordVariant(index: Int, word: Word, wordVariantState: WordVariantState) {
         val wordVariantView = binding.wordsVariants.getChildAt(index)
         val variantNumberTextView =
@@ -137,7 +162,7 @@ class WordGameFragment : Fragment() {
         }
 
         variantNumberTextView.text = (index + 1).toString()
-        variantTextView.text = word.russian
+        variantTextView.text = word.russian.capitalizeWord()
 
         val wordVariantDrawable = wordVariantState.let {
             when {
@@ -182,5 +207,28 @@ class WordGameFragment : Fragment() {
             )
         )
         variantTextView.setTextColor(ContextCompat.getColor(requireContext(), wordTextColor))
+    }
+
+    private fun showCorrectSheet() {
+        val dy = requireContext().toPx(20).toFloat()
+        binding.correctBottomSheet.root.let {
+            it.isVisible = true
+            it.animate().setDuration(0).translationY(dy).alpha(0F).start()
+            it.animate().setDuration(150).translationY(0F).alpha(1F).start()
+        }
+    }
+
+    private fun showIncorrectSheet() {
+        val dy = requireContext().toPx(20).toFloat()
+        binding.incorrectBottomSheet.root.let {
+            it.isVisible = true
+            it.animate().setDuration(0).translationY(dy).alpha(0F).start()
+            it.animate().setDuration(150).translationY(0F).alpha(1F).start()
+        }
+    }
+
+    private fun hideSheets() {
+        binding.correctBottomSheet.root.isVisible = false
+        binding.incorrectBottomSheet.root.isVisible = false
     }
 }

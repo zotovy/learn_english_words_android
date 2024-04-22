@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentWordGameResultBinding
+import dev.zotov.ui.utils.capitalizeWord
 import dev.zotov.ui.utils.setMargin
 import dev.zotov.ui.utils.toPx
 
@@ -34,6 +36,7 @@ class WordGameResultFragment : Fragment() {
         setupScore()
         setupMessage()
         setupAnswers()
+        setupTryAgainButton()
     }
 
     @SuppressLint("SetTextI18n")
@@ -66,11 +69,11 @@ class WordGameResultFragment : Fragment() {
             view.findViewById<TextView>(R.id.word_english).text = answer.english.let {
                 if (answer.russian != null) "$it – "
                 else it
-            }
+            }.capitalizeWord()
 
             answer.russian?.let {russian ->
                 view.findViewById<TextView>(R.id.word_russian).apply {
-                    text = russian
+                    text = russian.capitalizeWord()
 
                     val textColor = if (answer.correct) {
                         ContextCompat.getColor(requireContext(), dev.zotov.ui.R.color.success_500)
@@ -85,6 +88,14 @@ class WordGameResultFragment : Fragment() {
             view.setMargin(bottom = requireContext().toPx(24))
 
             binding.results.addView(view)
+        }
+    }
+
+    private fun setupTryAgainButton() {
+        binding.btnTryAgain.setOnClickListener {
+            findNavController().navigate(
+                WordGameResultFragmentDirections.actionWordGameResultFragmentToWordGameFragment()
+            )
         }
     }
 }

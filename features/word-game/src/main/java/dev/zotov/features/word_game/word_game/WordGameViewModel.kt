@@ -56,13 +56,7 @@ class WordGameViewModel @Inject constructor(
                 )
             }
 
-            _state.value = currentState.copy(
-                currentQuestionIndex = min(
-                    currentState.currentQuestionIndex + 1,
-                    currentState.wordQuestions.size - 1,
-                ),
-                currentQuestionState = WordVariantState.Idle,
-            )
+            nextQuestion()
         }
     }
 
@@ -83,10 +77,23 @@ class WordGameViewModel @Inject constructor(
 
             _answers.add(
                 WordGameResult.Answer(
-                    english = word.english,
+                    english = currentState.currentQuestion.targetWord.english,
                     russian = word.russian,
                     correct = isCorrect,
                 )
+            )
+        }
+    }
+
+    fun nextQuestion() {
+        val currentState = _state.value
+        if (currentState is WordGameState.Idle) {
+            _state.value = currentState.copy(
+                currentQuestionIndex = min(
+                    currentState.currentQuestionIndex + 1,
+                    currentState.wordQuestions.size - 1,
+                ),
+                currentQuestionState = WordVariantState.Idle,
             )
         }
     }
