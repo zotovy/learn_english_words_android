@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="text_H1">
+        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="android:textSize">64sp</item>
+    </style>
+
     <style name="text_H2">
         <item name="android:fontFamily">@font/nunito_semibold</item>
         <item name="android:textSize">36sp</item>
     </style>
 
-    <style name="text_body">
+    <style name="text_H3">
         <item name="android:fontFamily">@font/inter_regular</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="text_H4">
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="text_body">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>

@@ -46,13 +46,15 @@ class WordGameViewModel @Inject constructor(
     fun skipQuestion() {
         val currentState = _state.value
         if (currentState is WordGameState.Idle) {
-            _answers.add(
-                WordGameResult.Answer(
-                    english = currentState.currentQuestion.targetWord.english,
-                    russian = null,
-                    correct = false,
+            if (currentState.currentQuestionState is WordVariantState.Idle) {
+                _answers.add(
+                    WordGameResult.Answer(
+                        english = currentState.currentQuestion.targetWord.english,
+                        russian = null,
+                        correct = false,
+                    )
                 )
-            )
+            }
 
             _state.value = currentState.copy(
                 currentQuestionIndex = min(

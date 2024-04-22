@@ -75,8 +75,10 @@ class WordGameFragment : Fragment() {
         }
 
         if (state.isLast) {
-            viewModel.gameResult?.let { gameResult ->
-                binding.skipButton.setOnClickListener {
+            binding.skipButton.setOnClickListener {
+                viewModel.skipQuestion()
+
+                viewModel.gameResult?.let { gameResult ->
                     findNavController().navigate(
                         WordGameFragmentDirections.actionWordGameFragmentToWordGameResultFragment(
                             result = gameResult
@@ -84,7 +86,6 @@ class WordGameFragment : Fragment() {
                     )
                 }
             }
-
         }
 
         binding.progressBar.isVisible = false

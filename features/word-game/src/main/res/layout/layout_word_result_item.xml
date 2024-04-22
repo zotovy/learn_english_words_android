@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_word_variant_container"
+    tools:layout_margin="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/word_variant_number"
+        tools:text="1"
+        style="@style/text_H4"
+        android:fontFamily="@font/inter_semibold"
+        android:textColor="@color/indigo_900"
+        android:background="@drawable/shape_word_number"
+        android:layout_width="36dp"
+        android:gravity="center"
+        android:layout_height="36dp"/>
+
+    <TextView
+        android:id="@+id/word_english"
+        tools:text="Galaxy – "
+        style="@style/text_H4"
+        android:textColor="@color/gray_700"
+        android:layout_marginLeft="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/word_russian"
+        tools:text="Галактика"
+        style="@style/text_H4"
+        android:textColor="@color/success_500"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
