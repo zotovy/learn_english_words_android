@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentGameProgressBarBinding
+import dev.zotov.ui.utils.setMargin
+import dev.zotov.ui.utils.toPx
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -66,9 +68,7 @@ class GameProgressBarFragment : Fragment() {
 
             // add spacing
             if (i != itemCount) {
-                item.layoutParams = (item.layoutParams as ViewGroup.MarginLayoutParams).apply {
-                    setMargins(0, 0, 16, 0)
-                }
+                item.setMargin(end = requireContext().toPx(4))
             }
 
             binding.root.addView(item)
@@ -103,7 +103,7 @@ class GameProgressBarFragment : Fragment() {
                 fillItem(i)
                 delay(750)
             }
-            for (i in index downTo (activeIndex + 1)) {
+            for (i in activeIndex downTo (index + 1)) {
                 refuseItem(i)
                 delay(750)
             }
