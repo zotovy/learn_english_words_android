@@ -38,7 +38,7 @@ class WordGameViewModel @Inject constructor(
                 )
             } catch (e: Throwable) {
                 Log.e(TAG, "Failed to initialize viewmodel", e)
-                _state.value = WordGameState.Error
+                _state.value = WordGameState.Error(e.message ?: "Упс... Какая-то ошибка")
             }
         }
     }

@@ -16,7 +16,7 @@ sealed class WordGameState {
         val isLast: Boolean get() = currentQuestionIndex == wordQuestions.size - 1
     }
 
-    data object Error: WordGameState()
+    data class Error(val message: String): WordGameState()
 }
 
 sealed class WordVariantState {

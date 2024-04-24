@@ -7,64 +7,62 @@
     tools:context="dev.zotov.features.word_game.word_game.WordGameFragment">
 
     <androidx.fragment.app.FragmentContainerView
-        android:visibility="gone"
-        tools:visibility="visible"
         android:id="@+id/game_progress_bar"
         android:name="dev.zotov.features.word_game.ui.GameProgressBarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         app:itemCount="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <TextView
-        android:visibility="gone"
-        tools:visibility="visible"
         android:id="@+id/target_word"
+        style="@style/text_H2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="72dp"
+        android:textColor="@color/gray_800"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/game_progress_bar"
         tools:text="Galaxy"
-        style="@style/text_H2"
-        android:textColor="@color/gray_800"
-        app:layout_constraintTop_toBottomOf="@+id/game_progress_bar"/>
+        tools:visibility="visible" />
 
     <TextView
-        android:visibility="gone"
-        tools:visibility="visible"
         android:id="@+id/target_word_conjunction"
         style="@style/text_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/gray_400"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/target_word"
-        tools:text="noun" />
+        tools:text="noun"
+        tools:visibility="visible" />
 
     <LinearLayout
-        android:visibility="gone"
-        tools:visibility="visible"
         android:id="@+id/words_variants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/target_word_conjunction"
-        android:orientation="vertical" />
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/skip_button"
-        android:visibility="gone"
-        tools:visibility="visible"
         style="@style/SecondaryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,35 +70,54 @@
         android:layout_marginBottom="16dp"
         android:text="@string/skip"
         android:textAllCaps="false"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/indigo_600"
+        android:indeterminateTintMode="src_atop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/error_message"
+        style="@style/text_H4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textColor="@color/error_600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Какая-то ошибка"
+        tools:visibility="invisible" />
+
     <include
         android:id="@+id/correct_bottom_sheet"
-        android:visibility="invisible"
         layout="@layout/layout_correct_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <include
         android:id="@+id/incorrect_bottom_sheet"
-        android:visibility="invisible"
         layout="@layout/layout_incorrect_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

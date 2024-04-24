@@ -92,14 +92,15 @@ class WordGameFragment : Fragment() {
         if (state.isLast) {
             binding.skipButton.setOnClickListener {
                 viewModel.skipQuestion()
+                navigateToResultPage()
+            }
 
-                viewModel.gameResult?.let { gameResult ->
-                    findNavController().navigate(
-                        WordGameFragmentDirections.actionWordGameFragmentToWordGameResultFragment(
-                            result = gameResult
-                        )
-                    )
-                }
+            binding.correctBottomSheet.continueButton.setOnClickListener {
+                navigateToResultPage()
+            }
+
+            binding.incorrectBottomSheet.continueButton.setOnClickListener {
+                navigateToResultPage()
             }
         }
 
@@ -111,6 +112,8 @@ class WordGameFragment : Fragment() {
         }
 
         binding.progressBar.isVisible = false
+        binding.errorMessage.isVisible = false
+
         binding.gameProgressBar.isVisible = true
         binding.targetWord.isVisible = true
         binding.targetWordConjunction.isVisible = true
@@ -125,10 +128,19 @@ class WordGameFragment : Fragment() {
         binding.targetWordConjunction.isVisible = false
         binding.wordsVariants.isVisible = false
         binding.skipButton.isVisible = false
+        binding.errorMessage.isVisible = false
     }
 
     private fun handleErrorState(state: WordGameState.Error) {
+        binding.progressBar.isVisible = false
+        binding.gameProgressBar.isVisible = false
+        binding.targetWord.isVisible = false
+        binding.targetWordConjunction.isVisible = false
+        binding.wordsVariants.isVisible = false
+        binding.skipButton.isVisible = false
 
+        binding.errorMessage.text = state.message
+        binding.errorMessage.isVisible = true
     }
 
     private fun createWordVariantView(number: Int, word: Word) {
@@ -230,5 +242,15 @@ class WordGameFragment : Fragment() {
     private fun hideSheets() {
         binding.correctBottomSheet.root.isVisible = false
         binding.incorrectBottomSheet.root.isVisible = false
+    }
+
+    private fun navigateToResultPage() {
+        viewModel.gameResult?.let { gameResult ->
+            findNavController().navigate(
+                WordGameFragmentDirections.actionWordGameFragmentToWordGameResultFragment(
+                    result = gameResult
+                )
+            )
+        }
     }
 }
