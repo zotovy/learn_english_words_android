@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/word_info_nav_graph"
+    app:startDestination="@id/wordInfoDialogFragment">
+
+    <dialog
+        android:id="@+id/wordInfoDialogFragment"
+        android:name="dev.zotov.features.word_info.word_info_dialog.WordInfoDialogFragment"
+        android:label="fragment_word_info_dialog"
+        tools:layout="@layout/fragment_word_info_dialog">
+
+        <deepLink app:uri="android-app://dev.zotov.learn_english_words/features/word-info/word-info-dialog?word={word}" />
+        <argument
+            android:name="word"
+            app:argType="string" />
+    </dialog>
+</navigation>

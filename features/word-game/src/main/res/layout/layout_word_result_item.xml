@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/word_variant_number"
         tools:text="1"
-        style="@style/text_H4"
+        style="@style/text_H5"
         android:fontFamily="@font/inter_semibold"
         android:textColor="@color/indigo_900"
         android:background="@drawable/shape_word_number"
@@ -21,7 +21,7 @@
     <TextView
         android:id="@+id/word_english"
         tools:text="Galaxy – "
-        style="@style/text_H4"
+        style="@style/text_H5"
         android:textColor="@color/gray_700"
         android:layout_marginLeft="18dp"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
     <TextView
         android:id="@+id/word_russian"
         tools:text="Галактика"
-        style="@style/text_H4"
+        style="@style/text_H5"
         android:textColor="@color/success_500"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

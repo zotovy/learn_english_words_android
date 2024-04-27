@@ -7,4 +7,5 @@
 
 
     <include app:graph="@navigation/word_game_nav_graph" />
+    <include app:graph="@navigation/word_info_nav_graph" />
 </navigation>

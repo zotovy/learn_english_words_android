@@ -64,7 +64,9 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(project(":database"))
+    implementation(project(":shared"))
     implementation(project(":words-data"))
     implementation(project(":words-api"))
     implementation(project(":features:word-game"))
+    implementation(project(":features:word-info"))
 }

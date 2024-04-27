@@ -11,6 +11,7 @@ import dev.zotov.words_data.utils.toWordDefinitionDBO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import java.util.Collections.max
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -28,6 +29,8 @@ class WordsRepositoryImpl @Inject constructor(
 
     companion object {
         private const val TAG = "WordsRepository"
+
+        private val banList = listOf("to", "a", "the")
     }
 
     override suspend fun getFiveQuestions(): List<WordQuestion> {
@@ -55,6 +58,7 @@ class WordsRepositoryImpl @Inject constructor(
                 return wordDefinition
             }
         } catch (e: Throwable) {
+            Log.e(TAG, e.toString())
             Log.e(TAG, "Failed to get definition for word '$word'", e)
         }
         return null
@@ -64,7 +68,7 @@ class WordsRepositoryImpl @Inject constructor(
         val words = appDatabase.wordDao.getRandomWords(5)
 
         // Choose target word and variants
-        val targetWord =  words.first().toWord()
+        val targetWord = words.first().toWord()
         val variants = words.subList(1, words.size - 1).map { it.toWord() }.toMutableList()
 
         // Insert correct word translation to random position in variants
@@ -88,7 +92,8 @@ class WordsRepositoryImpl @Inject constructor(
     }
 
     private suspend fun getNetworkWordDefinition(word: String): WordDefinition? {
-        val response = wordsApi.getWordDefinition(word)
+        Log.d(TAG, cleanWord(word))
+        val response = wordsApi.getWordDefinition(cleanWord(word))
 
         if (response.isSuccessful) {
             val body = response.body()
@@ -104,5 +109,18 @@ class WordsRepositoryImpl @Inject constructor(
     private suspend fun saveWordDefinitionInToCache(definition: WordDefinition) {
         val wordDefinitionDBO = definition.toWordDefinitionDBO()
         appDatabase.wordDefinitionDao.insertWordDefinition(wordDefinitionDBO)
+    }
+
+    private fun cleanWord(word: String): String {
+        val parts = word.split(" ")
+            .filter { !banList.contains(it) }
+            .map { wordPart -> wordPart.filter { it.isLetter() } }
+
+        if (parts.size == 1) {
+            return parts.first()
+        }
+
+        Log.e(TAG, "Invalid word $word")
+        return parts.maxBy { it.length }
     }
 }

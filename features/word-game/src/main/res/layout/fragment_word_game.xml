@@ -78,11 +78,7 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/indigo_600"
-        android:indeterminateTintMode="src_atop"
+        style="@style/ProgressBarStyles"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +86,7 @@
 
     <TextView
         android:id="@+id/error_message"
-        style="@style/text_H4"
+        style="@style/text_H5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

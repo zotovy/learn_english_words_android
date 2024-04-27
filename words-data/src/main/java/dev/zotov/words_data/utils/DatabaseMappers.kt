@@ -30,8 +30,8 @@ internal fun WordDefinitionDBO.toWordDefinition(): WordDefinition {
 
 internal fun WordPhoneticDBO.toWordPhonetic(): WordPhonetic {
     return WordPhonetic(
-        audio = this.audio,
-        text = this.text,
+        audio = this.audio.let { if (it.isNullOrEmpty()) null else this.audio },
+        text = this.text.let { if (it.isNullOrEmpty()) null else this.text },
     )
 }
 

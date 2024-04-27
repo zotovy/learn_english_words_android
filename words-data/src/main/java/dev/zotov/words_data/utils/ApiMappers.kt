@@ -9,7 +9,7 @@ import dev.zotov.words_data.models.WordPhonetic
 fun WordDefinitionDto.toWordDefinition(): WordDefinition {
     return WordDefinition(
         word = this.word,
-        phonetics = this.phonetics.firstOrNull { it.audio != null && it.text != null }
+        phonetics = this.phonetics.firstOrNull { !it.audio.isNullOrEmpty() && !it.text.isNullOrEmpty() }
             ?.let { phonetic ->
                 WordPhonetic(
                     audio = phonetic.audio,

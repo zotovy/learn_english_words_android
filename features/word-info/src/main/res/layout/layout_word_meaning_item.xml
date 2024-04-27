@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/word"
+            style="@style/text_H5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/indigo_600"
+            tools:text="Galaxy" />
+
+        <TextView
+            android:id="@+id/speechOfText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/gray_500"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            tools:text="noun" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="14dp"
+        android:orientation="vertical"
+        android:id="@+id/meaningsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
