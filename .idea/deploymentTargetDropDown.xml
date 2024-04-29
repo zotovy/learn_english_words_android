@@ -24,6 +24,9 @@
       <entry key="features.word-game-wrong">
         <State />
       </entry>
+      <entry key="shouldReturn5RandomWord()">
+        <State />
+      </entry>
       <entry key="word-game">
         <State />
       </entry>
