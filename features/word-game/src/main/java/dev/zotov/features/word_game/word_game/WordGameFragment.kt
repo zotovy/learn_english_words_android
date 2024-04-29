@@ -2,14 +2,11 @@ package dev.zotov.features.word_game.word_game
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -20,8 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentWordGameBinding
 import dev.zotov.features.word_game.ui.GameProgressBarFragment
+import dev.zotov.features.word_game.ui.WordVariantView
 import dev.zotov.ui.utils.capitalizeWord
-import dev.zotov.ui.utils.setMargin
 import dev.zotov.ui.utils.toPx
 import dev.zotov.words_data.models.Word
 
@@ -33,6 +30,8 @@ class WordGameFragment : Fragment() {
     private val viewModel: WordGameViewModel by viewModels()
 
     private lateinit var sheetAnimation: Animation
+
+    private var variantsViews = mutableListOf<WordVariantView>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,7 +84,7 @@ class WordGameFragment : Fragment() {
         // Variants
         state.currentQuestion.variants.forEachIndexed { index, word ->
             if (binding.wordsVariants.childCount < index + 1) {
-                createWordVariantView(index + 1, word)
+                createWordVariantView(index, word)
             } else {
                 updateWordVariant(index, word, state.currentQuestionState)
             }
@@ -146,84 +145,25 @@ class WordGameFragment : Fragment() {
     }
 
     private fun createWordVariantView(number: Int, word: Word) {
-        val variantView = LayoutInflater.from(requireContext()).inflate(
-            R.layout.layout_word_variant,
-            binding.root,
-            false
-        )
-
-        variantView.setOnClickListener {
+        val wordVariantView = WordVariantView(requireContext())
+        wordVariantView.bind(number, word, WordVariantState.Idle) {
             viewModel.selectVariant(word)
         }
-
-        variantView.findViewById<TextView>(R.id.word_variant_number).text = number.toString()
-        variantView.findViewById<TextView>(R.id.word_variant).text = word.russian.capitalizeWord()
-        variantView.setMargin(bottom = requireContext().toPx(16))
-
-        binding.wordsVariants.addView(variantView)
+        variantsViews.add(wordVariantView)
+        binding.wordsVariants.addView(wordVariantView)
     }
 
     @SuppressLint("SetTextI18n")
     private fun updateWordVariant(index: Int, word: Word, wordVariantState: WordVariantState) {
-        val wordVariantView = binding.wordsVariants.getChildAt(index)
-        val variantNumberTextView =
-            wordVariantView.findViewById<TextView>(R.id.word_variant_number)
-        val variantTextView = wordVariantView.findViewById<TextView>(R.id.word_variant)
+        val wordVariantView = variantsViews[index]
 
-        wordVariantView.setOnClickListener {
-            Log.d("setOnClickListener", word.toString())
-            viewModel.selectVariant(word)
-        }
+        wordVariantView.bind(index, word, wordVariantState) {
+            when (wordVariantState) {
+                is WordVariantState.Correct,
+                is WordVariantState.InCorrect -> showWordInfoDialog(word.english)
 
-        variantNumberTextView.text = (index + 1).toString()
-        variantTextView.text = word.russian.capitalizeWord()
-
-        val wordVariantDrawable = wordVariantState.let {
-            when {
-                it is WordVariantState.Correct && it.word == word -> R.drawable.shape_word_variant_container_correct
-                it is WordVariantState.InCorrect && it.word == word -> R.drawable.shape_word_variant_container_incorrect
-                else -> R.drawable.shape_word_variant_container
+                is WordVariantState.Idle -> viewModel.selectVariant(word)
             }
-        }
-
-        val wordVariantNumberDrawable = wordVariantState.let {
-            when {
-                it is WordVariantState.Correct && it.word == word -> R.drawable.shape_word_number_correct
-                it is WordVariantState.InCorrect && it.word == word -> R.drawable.shape_word_number_incorrect
-                else -> R.drawable.shape_word_number
-            }
-        }
-
-        val wordVariantNumberColor = wordVariantState.let {
-            when {
-                it is WordVariantState.Correct && it.word == word -> R.color.white
-                it is WordVariantState.InCorrect && it.word == word -> R.color.white
-                else -> dev.zotov.ui.R.color.indigo_900
-            }
-        }
-
-        val wordTextColor = wordVariantState.let {
-            when {
-                it is WordVariantState.Correct && it.word == word -> dev.zotov.ui.R.color.success_500
-                it is WordVariantState.InCorrect && it.word == word -> dev.zotov.ui.R.color.error_600
-                else -> dev.zotov.ui.R.color.gray_700
-            }
-        }
-
-        wordVariantView.background =
-            ContextCompat.getDrawable(requireContext(), wordVariantDrawable)
-        variantNumberTextView.background =
-            ContextCompat.getDrawable(requireContext(), wordVariantNumberDrawable)
-        variantNumberTextView.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                wordVariantNumberColor
-            )
-        )
-        variantTextView.setTextColor(ContextCompat.getColor(requireContext(), wordTextColor))
-
-        wordVariantView.setOnClickListener {
-            showWordInfoDialog(word.english)
         }
     }
 
