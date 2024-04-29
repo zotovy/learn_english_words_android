@@ -13,4 +13,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.serialization)
     implementation(libs.ktx.serialization)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.ktx.coroutines.test)
+    testImplementation(libs.retrofit.mockWebServer)
+    testImplementation(libs.ktx.serialization)
 }
