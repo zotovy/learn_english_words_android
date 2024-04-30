@@ -4,6 +4,7 @@ import dev.zotov.words_api.utils.TestData
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -19,18 +20,25 @@ class WordsApiTest {
         wordsApi = WordsApi(server.url("/").toString())
     }
 
+    @After
+    fun shutdown() {
+        server.shutdown()
+    }
+
     @Test
-    fun shouldHandleDogWordDefinition() = runTest {
+    fun shouldHandleAccessWordDefinition() = runTest {
         val dogResponse = MockResponse().apply {
             setBody(TestData.WordDefinitionDtos.Raw.wordAccess)
         }
         server.enqueue(dogResponse)
 
         val data = wordsApi.getWordDefinition("access")
-        server.takeRequest()
+        val request = server.takeRequest()
 
         Assert.assertEquals(1, data.body()!!.size)
         Assert.assertEquals(TestData.WordDefinitionDtos.wordAccess, data.body()!!.first())
+        Assert.assertEquals(request.method, "GET")
+        Assert.assertEquals(request.path, "/api/v2/entries/en/access")
     }
 
     @Test
@@ -39,9 +47,11 @@ class WordsApiTest {
         server.enqueue(emptyResponse)
 
         val data = wordsApi.getWordDefinition("empty")
-        server.takeRequest()
+        val request = server.takeRequest()
 
         Assert.assertEquals(true, data.isSuccessful)
         Assert.assertEquals(emptyList<Any>(), data.body()!!)
+        Assert.assertEquals(request.method, "GET")
+        Assert.assertEquals(request.path, "/api/v2/entries/en/empty")
     }
 }
