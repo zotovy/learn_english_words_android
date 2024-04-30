@@ -13,10 +13,10 @@ import dev.zotov.words_data.models.WordPhonetic
 
 internal fun WordDBO.toWord(): Word {
     return Word(
-        id = this.uid,
-        russian = this.russian,
-        english = this.english.split(Regex("[;,]")).first(),
-        conjunction = this.conjunction,
+        id = uid,
+        russian = russian,
+        english = english.split(Regex("[;,]")).first(),
+        conjunction = conjunction,
     )
 }
 
