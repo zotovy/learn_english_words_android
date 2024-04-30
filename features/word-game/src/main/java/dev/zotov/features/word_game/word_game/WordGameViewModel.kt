@@ -31,6 +31,11 @@ class WordGameViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val questions = wordsRepository.getFiveQuestions()
+
+                if (questions.isEmpty()) {
+                    throw IllegalArgumentException("Не удалось загрузить вопросы :(")
+                }
+
                 _state.value = WordGameState.Idle(
                     wordQuestions = questions,
                     currentQuestionIndex = 0,
@@ -38,6 +43,7 @@ class WordGameViewModel @Inject constructor(
                 )
             } catch (e: Throwable) {
                 Log.e(TAG, "Failed to initialize viewmodel", e)
+                println("message is '${e.message}'")
                 _state.value = WordGameState.Error(e.message ?: "Упс... Какая-то ошибка")
             }
         }

@@ -11,7 +11,6 @@ import dev.zotov.words_data.utils.toWordDefinitionDBO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.util.Collections.max
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -22,7 +21,7 @@ interface WordsRepository {
     suspend fun getWordDefinition(word: String): WordDefinition?
 }
 
-class WordsRepositoryImpl @Inject constructor(
+open class WordsRepositoryImpl @Inject constructor(
     private val appDatabase: AppDatabase,
     private val wordsApi: WordsApi
 ) : WordsRepository {

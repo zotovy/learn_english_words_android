@@ -22,6 +22,8 @@ nav = "2.7.7"
 ktxParcelize = "2.0.0-RC1"
 mockWebServer = "4.12.0"
 mockitoKotlin = "4.1.0"
+mockito = "5.11.0"
+archCore = "2.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +36,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidFragment" }
+androidx-arch-test = { module = "androidx.arch.core:core-testing", version.ref = "archCore" }
 
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "nav" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "nav" }
@@ -56,6 +59,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.re
 
 mockito-ktx = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoKotlin" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockito" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
