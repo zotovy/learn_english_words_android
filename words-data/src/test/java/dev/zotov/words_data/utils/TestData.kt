@@ -11,9 +11,26 @@ import dev.zotov.words_data.models.WordDefinition
 import dev.zotov.words_data.models.WordMeaning
 import dev.zotov.words_data.models.WordMeaningDefinition
 import dev.zotov.words_data.models.WordPhonetic
+import dev.zotov.words_data.models.WordQuestion
 
 object TestData {
     object WordDBOs {
+        fun all() = listOf(
+            wordLight,
+            wordHeavy,
+            wordFast,
+            wordSlow,
+            wordBig,
+            wordCat,
+            wordDog,
+            wordBook,
+            wordRun,
+            wordJump,
+            wordSwim,
+            wordEat
+        )
+
+        // Adjectives
         val wordLight = WordDBO(
             uid = 1,
             russian = "Легкий",
@@ -27,9 +44,97 @@ object TestData {
             english = "Heavy",
             conjunction = "adjective"
         )
+
+        val wordFast = WordDBO(
+            uid = 3,
+            russian = "Быстрый",
+            english = "Fast",
+            conjunction = "adjective"
+        )
+
+        val wordSlow = WordDBO(
+            uid = 4,
+            russian = "Медленный",
+            english = "Slow",
+            conjunction = "adjective"
+        )
+
+        val wordBig = WordDBO(
+            uid = 5,
+            russian = "Большой",
+            english = "Big",
+            conjunction = "adjective"
+        )
+
+        // Nouns
+        val wordCat = WordDBO(
+            uid = 6,
+            russian = "Кот",
+            english = "Cat",
+            conjunction = "noun"
+        )
+
+        val wordDog = WordDBO(
+            uid = 7,
+            russian = "Собака",
+            english = "Dog",
+            conjunction = "noun"
+        )
+
+        val wordBook = WordDBO(
+            uid = 8,
+            russian = "Книга",
+            english = "Book",
+            conjunction = "noun"
+        )
+
+        // Verbs
+        val wordRun = WordDBO(
+            uid = 9,
+            russian = "Бегать",
+            english = "Run",
+            conjunction = "verb"
+        )
+
+        val wordJump = WordDBO(
+            uid = 10,
+            russian = "Прыгать",
+            english = "Jump",
+            conjunction = "verb"
+        )
+
+        val wordSwim = WordDBO(
+            uid = 11,
+            russian = "Плавать",
+            english = "Swim",
+            conjunction = "verb"
+        )
+
+        val wordEat = WordDBO(
+            uid = 12,
+            russian = "Есть",
+            english = "Eat",
+            conjunction = "verb"
+        )
     }
 
     object Words {
+        fun all() = listOf(
+            wordLight,
+            wordHeavy,
+            wordFast,
+            wordSlow,
+            wordBig,
+            wordCat,
+            wordDog,
+            wordBook,
+            wordRun,
+            wordJump,
+            wordSwim,
+            wordEat
+        )
+
+        // Adjectives
         val wordLight = Word(
             id = 1,
             russian = "Легкий",
@@ -42,6 +147,78 @@ object TestData {
             russian = "Тяжелый",
             english = "Heavy",
             conjunction = "adjective"
+        )
+
+        val wordFast = Word(
+            id = 3,
+            russian = "Быстрый",
+            english = "Fast",
+            conjunction = "adjective"
+        )
+
+        val wordSlow = Word(
+            id = 4,
+            russian = "Медленный",
+            english = "Slow",
+            conjunction = "adjective"
+        )
+
+        val wordBig = Word(
+            id = 5,
+            russian = "Большой",
+            english = "Big",
+            conjunction = "adjective"
+        )
+
+        // Nouns
+        val wordCat = Word(
+            id = 6,
+            russian = "Кот",
+            english = "Cat",
+            conjunction = "noun"
+        )
+
+        val wordDog = Word(
+            id = 7,
+            russian = "Собака",
+            english = "Dog",
+            conjunction = "noun"
+        )
+
+        val wordBook = Word(
+            id = 8,
+            russian = "Книга",
+            english = "Book",
+            conjunction = "noun"
+        )
+
+        // Verbs
+        val wordRun = Word(
+            id = 9,
+            russian = "Бегать",
+            english = "Run",
+            conjunction = "verb"
+        )
+
+        val wordJump = Word(
+            id = 10,
+            russian = "Прыгать",
+            english = "Jump",
+            conjunction = "verb"
+        )
+
+        val wordSwim = Word(
+            id = 11,
+            russian = "Плавать",
+            english = "Swim",
+            conjunction = "verb"
+        )
+
+        val wordEat = Word(
+            id = 12,
+            russian = "Есть",
+            english = "Eat",
+            conjunction = "verb"
         )
     }
 
@@ -239,7 +416,7 @@ object TestData {
                 WordMeaning(
                     partOfSpeech = "noun",
                     definitions = listOf(
-                       WordMeaningDefinition(
+                        WordMeaningDefinition(
                             definition = "a statically typed programming language for modern multiplatform applications.",
                             example = "Kotlin was officially released as a new language for Android Development by Google",
                         ),
@@ -377,6 +554,64 @@ object TestData {
                     antonyms = listOf("walk", "stroll"),
                 ),
             ),
+        )
+    }
+
+    object WordQuestions {
+        fun fiveQuestions1() = listOf(
+            wordQuestionLight,
+            wordQuestionRun,
+            wordQuestionHeavy,
+            wordQuestionDog,
+            wordQuestionEat,
+        )
+
+        val wordQuestionLight = WordQuestion(
+            targetWord = Words.wordLight,
+            variants = listOf(Words.wordBig, Words.wordLight, Words.wordEat, Words.wordFast)
+        )
+
+        val wordQuestionRun = WordQuestion(
+            targetWord = Words.wordRun,
+            variants = listOf(Words.wordCat, Words.wordBook, Words.wordRun, Words.wordLight)
+        )
+
+        val wordQuestionHeavy = WordQuestion(
+            targetWord = Words.wordHeavy,
+            variants = listOf(Words.wordHeavy, Words.wordFast, Words.wordSlow, Words.wordSwim)
+        )
+
+        val wordQuestionDog = WordQuestion(
+            targetWord = Words.wordDog,
+            variants = listOf(Words.wordDog, Words.wordBig, Words.wordJump, Words.wordFast)
+        )
+
+        val wordQuestionEat = WordQuestion(
+            targetWord = Words.wordEat,
+            variants = listOf(Words.wordSlow, Words.wordJump, Words.wordDog, Words.wordEat)
+        )
+
+        val wordQuestionsLightDbo =
+            listOf(WordDBOs.wordLight, WordDBOs.wordBig, WordDBOs.wordEat, WordDBOs.wordFast)
+
+        val wordQuestionsRunDbo =
+            listOf(WordDBOs.wordRun, WordDBOs.wordBook, WordDBOs.wordCat, WordDBOs.wordLight)
+
+        val wordQuestionsHeavyDbo =
+            listOf(WordDBOs.wordHeavy, WordDBOs.wordFast, WordDBOs.wordSlow, WordDBOs.wordSwim)
+
+        val wordQuestionsDogDbo =
+            listOf(WordDBOs.wordDog, WordDBOs.wordBig, WordDBOs.wordJump, WordDBOs.wordFast)
+
+        val wordQuestionsEatDbo =
+            listOf(WordDBOs.wordEat, WordDBOs.wordSlow, WordDBOs.wordJump, WordDBOs.wordDog)
+
+        fun getWordQuestionDBOs() = listOf(
+            wordQuestionsLightDbo,
+            wordQuestionsRunDbo,
+            wordQuestionsHeavyDbo,
+            wordQuestionsDogDbo,
+            wordQuestionsEatDbo,
         )
     }
 }

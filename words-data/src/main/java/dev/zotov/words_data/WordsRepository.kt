@@ -58,6 +58,7 @@ class WordsRepositoryImpl @Inject constructor(
                 return wordDefinition
             }
         } catch (e: Throwable) {
+            println(e.toString())
             Log.e(TAG, e.toString())
             Log.e(TAG, "Failed to get definition for word '$word'", e)
         }
@@ -65,11 +66,11 @@ class WordsRepositoryImpl @Inject constructor(
     }
 
     private suspend fun getQuestion(): WordQuestion {
-        val words = appDatabase.wordDao.getRandomWords(5)
+        val words = appDatabase.wordDao.getRandomWords(4)
 
         // Choose target word and variants
         val targetWord = words.first().toWord()
-        val variants = words.subList(1, words.size - 1).map { it.toWord() }.toMutableList()
+        val variants = words.subList(1, words.size).map { it.toWord() }.toMutableList()
 
         // Insert correct word translation to random position in variants
         val position = Random.nextInt(variants.size + 1)
@@ -92,7 +93,6 @@ class WordsRepositoryImpl @Inject constructor(
     }
 
     private suspend fun getNetworkWordDefinition(word: String): WordDefinition? {
-        Log.d(TAG, cleanWord(word))
         val response = wordsApi.getWordDefinition(cleanWord(word))
 
         if (response.isSuccessful) {
@@ -120,7 +120,6 @@ class WordsRepositoryImpl @Inject constructor(
             return parts.first()
         }
 
-        Log.e(TAG, "Invalid word $word")
         return parts.maxBy { it.length }
     }
 }
