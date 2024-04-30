@@ -2,12 +2,12 @@ package dev.zotov.features.word_game.word_game
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dev.zotov.features.word_game.models.WordGameResult
 import dev.zotov.features.word_game.rules.MainCoroutineRule
 import dev.zotov.features.word_game.utils.TestData
 import dev.zotov.features.word_game.utils.getOrAwaitValueTest
 import dev.zotov.words_data.WordsRepositoryImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -124,6 +124,14 @@ class WordGameViewModelTest {
         val state = getViewModelState()
 
         Assert.assertEquals(expected, state)
+
+        val answers = wordGameViewModel.gameResult!!.answers
+        val expectedAnswer = WordGameResult.Answer(
+            english = TestData.Words.wordLight.english,
+            russian = null,
+            correct = false,
+        )
+        Assert.assertEquals(answers, listOf(expectedAnswer))
     }
 
     @Test
@@ -156,4 +164,93 @@ class WordGameViewModelTest {
         Assert.assertEquals(lastQuestionIndex, state.currentQuestionIndex)
     }
 
+    // ====================
+    // Select variant
+    // ====================
+
+    @Test
+    fun shouldSelectCorrectVariant() = runTest {
+        initializeViewModel()
+
+        wordGameViewModel.selectVariant(TestData.Words.wordLight)
+        advanceUntilIdle()
+
+        val expected = WordVariantState.Correct(TestData.Words.wordLight)
+        val state = getViewModelState() as WordGameState.Idle
+        Assert.assertEquals(expected, state.currentQuestionState)
+
+        val expectedAnswer = WordGameResult.Answer(
+            english = TestData.Words.wordLight.english,
+            russian = TestData.Words.wordLight.russian,
+            correct = true,
+        )
+        val answer = wordGameViewModel.gameResult!!.answers
+        Assert.assertEquals(listOf(expectedAnswer), answer)
+    }
+
+    @Test
+    fun shouldSelectInCorrectVariant() = runTest {
+        initializeViewModel()
+
+        wordGameViewModel.selectVariant(TestData.Words.wordRun)
+        advanceUntilIdle()
+
+        val expected = WordVariantState.InCorrect(TestData.Words.wordRun)
+        val state = getViewModelState() as WordGameState.Idle
+        Assert.assertEquals(expected, state.currentQuestionState)
+
+        val expectedAnswer = WordGameResult.Answer(
+            english = TestData.Words.wordLight.english,
+            russian = TestData.Words.wordRun.russian,
+            correct = false,
+        )
+        val answer = wordGameViewModel.gameResult!!.answers
+        Assert.assertEquals(listOf(expectedAnswer), answer)
+    }
+
+    @Test
+    fun shouldNotSelectCorrectVariantIfAlreadySelectOne() = runTest {
+        initializeViewModel()
+
+        wordGameViewModel.selectVariant(TestData.Words.wordLight)
+        advanceUntilIdle()
+
+        wordGameViewModel.selectVariant(TestData.Words.wordLight)
+        advanceUntilIdle()
+
+        val expected = WordVariantState.Correct(TestData.Words.wordLight)
+        val state = getViewModelState() as WordGameState.Idle
+        Assert.assertEquals(expected, state.currentQuestionState)
+
+        val expectedAnswer = WordGameResult.Answer(
+            english = TestData.Words.wordLight.english,
+            russian = TestData.Words.wordLight.russian,
+            correct = true,
+        )
+        val answer = wordGameViewModel.gameResult!!.answers
+        Assert.assertEquals(listOf(expectedAnswer), answer)
+    }
+
+    @Test
+    fun shouldNotSelectInCorrectVariantIfAlreadySelectOne() = runTest {
+        initializeViewModel()
+
+        wordGameViewModel.selectVariant(TestData.Words.wordLight)
+        advanceUntilIdle()
+
+        wordGameViewModel.selectVariant(TestData.Words.wordRun)
+        advanceUntilIdle()
+
+        val expected = WordVariantState.Correct(TestData.Words.wordLight)
+        val state = getViewModelState() as WordGameState.Idle
+        Assert.assertEquals(expected, state.currentQuestionState)
+
+        val expectedAnswer = WordGameResult.Answer(
+            english = TestData.Words.wordLight.english,
+            russian = TestData.Words.wordLight.russian,
+            correct = true,
+        )
+        val answer = wordGameViewModel.gameResult!!.answers
+        Assert.assertEquals(listOf(expectedAnswer), answer)
+    }
 }
