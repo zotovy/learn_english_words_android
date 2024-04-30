@@ -7,6 +7,8 @@ import dev.zotov.features.word_game.utils.TestData
 import dev.zotov.features.word_game.utils.getOrAwaitValueTest
 import dev.zotov.words_data.WordsRepositoryImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -27,7 +29,6 @@ class WordGameViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    //
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -44,15 +45,31 @@ class WordGameViewModelTest {
         Mockito.reset(wordsRepository)
     }
 
+    private suspend fun TestScope.initializeViewModel() {
+        whenever(wordsRepository.getFiveQuestions())
+            .thenReturn(TestData.WordQuestions.fiveQuestions1())
+
+        wordGameViewModel.initialize()
+        advanceUntilIdle()
+    }
+
+    private fun TestScope.getViewModelState(): WordGameState {
+        advanceUntilIdle()
+        return wordGameViewModel.state.getOrAwaitValueTest()
+    }
+
+    // ====================
+    // Initialize
+    // ====================
+
     @Test
     fun shouldInitializeSuccessfully() = runTest {
         whenever(wordsRepository.getFiveQuestions())
             .thenReturn(TestData.WordQuestions.fiveQuestions1())
 
         wordGameViewModel.initialize()
-        advanceUntilIdle()
 
-        val state = wordGameViewModel.state.getOrAwaitValueTest()
+        val state = getViewModelState()
         val expected = WordGameState.Idle(
             wordQuestions = TestData.WordQuestions.fiveQuestions1(),
             currentQuestionIndex = 0,
@@ -88,4 +105,55 @@ class WordGameViewModelTest {
         val expected = WordGameState.Error("Упс... Какая-то ошибка")
         Assert.assertEquals(expected, state)
     }
+
+    // ====================
+    // Skip Question
+    // ====================
+
+    @Test
+    fun shouldSkipQuestion() = runTest {
+        initializeViewModel()
+
+        wordGameViewModel.skipQuestion()
+
+        val expected = WordGameState.Idle(
+            wordQuestions = TestData.WordQuestions.fiveQuestions1(),
+            currentQuestionIndex = 1, // changed
+            currentQuestionState = WordVariantState.Idle,
+        )
+        val state = getViewModelState()
+
+        Assert.assertEquals(expected, state)
+    }
+
+    @Test
+    fun shouldNotSkipQuestionIfStateIsNotIdle() = runTest {
+        wordGameViewModel.skipQuestion()
+
+        val expected = WordGameState.Loading
+        val state = getViewModelState()
+
+        Assert.assertEquals(expected, state)
+    }
+
+    @Test
+    fun shouldNotSkipQuestionIfItsLastQuestion() = runTest {
+        initializeViewModel()
+        for (i in 1..4) {
+            wordGameViewModel.skipQuestion()
+            advanceUntilIdle()
+        }
+
+        val lastQuestionIndex = 4
+        var state = getViewModelState() as WordGameState.Idle
+        Assert.assertEquals(lastQuestionIndex, state.currentQuestionIndex)
+        Assert.assertEquals(true, state.isLast)
+
+        wordGameViewModel.skipQuestion()
+        advanceUntilIdle()
+
+        state = getViewModelState() as WordGameState.Idle
+        Assert.assertEquals(lastQuestionIndex, state.currentQuestionIndex)
+    }
+
 }
