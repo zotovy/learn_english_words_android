@@ -26,7 +26,7 @@ class WordsRepositoryTest {
     private lateinit var wordsApi: WordsApi
     private lateinit var wordDao: WordDao
     private lateinit var wordDefinitionDao: WordDefinitionDao
-    private lateinit var wordsRepository: WordsRepository
+    private lateinit var wordsRepository: WordsRepositoryImpl
 
     @Before
     fun setup() {

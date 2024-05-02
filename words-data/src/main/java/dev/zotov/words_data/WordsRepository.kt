@@ -57,7 +57,6 @@ open class WordsRepositoryImpl @Inject constructor(
                 return wordDefinition
             }
         } catch (e: Throwable) {
-            println(e.toString())
             Log.e(TAG, e.toString())
             Log.e(TAG, "Failed to get definition for word '$word'", e)
         }
