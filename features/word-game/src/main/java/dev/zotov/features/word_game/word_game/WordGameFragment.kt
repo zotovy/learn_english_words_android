@@ -7,17 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentWordGameBinding
 import dev.zotov.features.word_game.ui.GameProgressBarFragment
 import dev.zotov.features.word_game.ui.WordVariantView
+import dev.zotov.shared.navigation.DeepLinks
 import dev.zotov.ui.utils.capitalizeWord
 import dev.zotov.ui.utils.toPx
 import dev.zotov.words_data.models.Word
@@ -201,9 +200,7 @@ class WordGameFragment : Fragment() {
     }
 
     private fun showWordInfoDialog(word: String) {
-        val request = NavDeepLinkRequest.Builder
-            .fromUri("android-app://dev.zotov.learn_english_words/features/word-info/word-info-dialog?word=${word}".toUri())
-            .build()
+        val request = DeepLinks.wordInfoDialog(word)
         findNavController().navigate(request)
     }
 }

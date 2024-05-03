@@ -41,6 +41,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -56,11 +61,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.mockito.ktx)
-//    androidTestImplementation(libs.mockito.inline)
-    androidTestImplementation(libs.mockito.android)
-    androidTestImplementation(libs.ktx.coroutines.test)
-    androidTestImplementation(libs.androidx.arch.test)
+    testImplementation(libs.mockito.ktx)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.ktx.coroutines.test)
+    testImplementation(libs.androidx.arch.test)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -69,4 +74,5 @@ dependencies {
 
     implementation(project(":ui"))
     implementation(project(":words-data"))
+    implementation(project(":shared"))
 }

@@ -46,9 +46,9 @@ dependencies {
     implementation(libs.material)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.ktx.coroutines.test)
+    testImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.ktx.coroutines.test)
+    testImplementation(libs.robolectric)
 
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)

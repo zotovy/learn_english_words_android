@@ -2,7 +2,6 @@ package dev.zotov.database.dao
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.zotov.database.RoomAppDatabase
 import dev.zotov.database.utils.TestData
 import kotlinx.coroutines.test.runTest
@@ -11,8 +10,9 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
 class WordDaoTest {
 
     private lateinit var database: RoomAppDatabase

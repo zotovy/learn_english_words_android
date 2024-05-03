@@ -1,7 +1,6 @@
 package dev.zotov.features.word_game.word_game
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.zotov.features.word_game.models.WordGameResult
 import dev.zotov.features.word_game.rules.MainCoroutineRule
 import dev.zotov.features.word_game.utils.TestData
@@ -21,10 +20,11 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
+import org.robolectric.RobolectricTestRunner
 import java.io.IOException
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
 class WordGameViewModelTest {
 
     @get:Rule
