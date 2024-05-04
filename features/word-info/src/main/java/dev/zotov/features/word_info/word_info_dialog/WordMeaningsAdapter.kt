@@ -31,7 +31,7 @@ internal class WordMeaningsAdapter :
         val context = holder.itemView.context
 
         with(holder.binding) {
-            word.text = meaning.word
+            wordRepeat.text = meaning.word
             speechOfText.text = meaning.partOfSpeech
 
             meaning.definitions.forEachIndexed { index, definition ->

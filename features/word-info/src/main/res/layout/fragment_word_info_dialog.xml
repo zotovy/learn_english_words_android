@@ -47,7 +47,7 @@
                 android:textColor="@color/error_600"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/word"
+                app:layout_constraintTop_toBottomOf="@+id/wordRepeat"
                 tools:text="Error text" />
 
             <TextView
