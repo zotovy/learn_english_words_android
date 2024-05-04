@@ -1,38 +1,24 @@
 package dev.zotov.database
 
 import android.content.Context
-import androidx.room.Database
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import dev.zotov.database.converters.WordMeaningDBOTypeConverter
 import dev.zotov.database.dao.WordDao
 import dev.zotov.database.dao.WordDefinitionDao
-import dev.zotov.database.entities.WordDBO
-import dev.zotov.database.entities.WordDefinitionDBO
 
-class AppDatabase internal constructor(private val database: RoomAppDatabase) {
+interface AppDatabase {
     val wordDao: WordDao
-        get() = database.wordDao()
-
     val wordDefinitionDao: WordDefinitionDao
-        get() = database.wordDefinitionDao()
+    fun clearAll()
 }
 
+class AppDatabaseImpl internal constructor(private val database: RoomAppDatabase): AppDatabase {
+    override val wordDao: WordDao
+        get() = database.wordDao()
 
-@Database(
-    entities = [
-        WordDBO::class,
-        WordDefinitionDBO::class
-    ],
-    version = 1
-)
-@TypeConverters(WordMeaningDBOTypeConverter::class)
-internal abstract class RoomAppDatabase : RoomDatabase() {
+    override val wordDefinitionDao: WordDefinitionDao
+        get() = database.wordDefinitionDao()
 
-    abstract fun wordDao(): WordDao
-
-    abstract fun wordDefinitionDao(): WordDefinitionDao
+    override fun clearAll() = database.clearAllTables()
 }
 
 
@@ -45,5 +31,16 @@ fun AppDatabase(applicationContext: Context): AppDatabase {
         .createFromAsset("database/words.db")
         .build()
 
-    return AppDatabase(database = roomDatabase)
+    return AppDatabaseImpl(database = roomDatabase)
+}
+
+fun createInMemoryAppDatabase(applicationContext: Context): AppDatabase {
+    val roomDatabase = Room.inMemoryDatabaseBuilder(
+        applicationContext,
+        RoomAppDatabase::class.java,
+    )
+        .allowMainThreadQueries()
+        .build()
+
+    return AppDatabaseImpl(database = roomDatabase)
 }

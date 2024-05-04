@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "dev.zotov.learnenglishwords.utils.CustomTestRunner"
     }
 
     buildTypes {
@@ -56,12 +56,21 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.retrofit.mockWebServer)
+    androidTestImplementation(libs.hilt.test)
+    kspAndroidTest(libs.hilt.compiler)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.mockito.ktx)
+    androidTestImplementation(libs.ktx.coroutines.test)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    implementation(libs.room.ktx)
 
     implementation(project(":database"))
     implementation(project(":shared"))

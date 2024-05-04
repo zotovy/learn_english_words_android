@@ -1,7 +1,6 @@
 package dev.zotov.database.dao
 
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import dev.zotov.database.RoomAppDatabase
 import dev.zotov.database.utils.TestData
 import kotlinx.coroutines.test.runTest
@@ -11,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 
 @RunWith(RobolectricTestRunner::class)
 class WordDaoTest {
@@ -21,7 +21,7 @@ class WordDaoTest {
     @Before
     fun setup() {
         database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
+            RuntimeEnvironment.getApplication(),
             RoomAppDatabase::class.java,
         ).allowMainThreadQueries().build()
         wordDao = database.wordDao()

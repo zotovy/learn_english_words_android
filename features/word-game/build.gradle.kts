@@ -59,13 +59,18 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.mockito.ktx)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.robolectric)
     testImplementation(libs.ktx.coroutines.test)
     testImplementation(libs.androidx.arch.test)
+
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.espresso.contrib)
+    androidTestImplementation(libs.espresso.intents)
+    androidTestImplementation(libs.androidx.fragment.testing)
+    androidTestImplementation(libs.hilt.test)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

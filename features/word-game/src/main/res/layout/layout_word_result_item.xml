@@ -23,7 +23,7 @@
         tools:text="Galaxy – "
         style="@style/text_H5"
         android:textColor="@color/gray_700"
-        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
