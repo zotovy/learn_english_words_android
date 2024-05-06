@@ -6,15 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentWordGameResultBinding
-import dev.zotov.ui.utils.capitalizeWord
-import dev.zotov.ui.utils.setMargin
-import dev.zotov.ui.utils.toPx
+import dev.zotov.features.word_game.ui.WordResultItemView
 
 class WordGameResultFragment : Fragment() {
 
@@ -60,34 +55,10 @@ class WordGameResultFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupAnswers() {
-        val inflater = LayoutInflater.from(requireContext())
-
         navArgs.result.answers.forEachIndexed { index, answer ->
-            val view = inflater.inflate(R.layout.layout_word_result_item, binding.results, false)
-            view.findViewById<TextView>(R.id.word_variant_number).text = (index + 1).toString()
-
-            view.findViewById<TextView>(R.id.word_english).text = answer.english.let {
-                if (answer.russian != null) "$it – "
-                else it
-            }.capitalizeWord()
-
-            answer.russian?.let {russian ->
-                view.findViewById<TextView>(R.id.word_russian).apply {
-                    text = russian.capitalizeWord()
-
-                    val textColor = if (answer.correct) {
-                        ContextCompat.getColor(context, dev.zotov.ui.R.color.success_500)
-                    } else {
-                        ContextCompat.getColor(context, dev.zotov.ui.R.color.error_600)
-                    }
-
-                    setTextColor(textColor)
-                }
-            }
-
-            view.setMargin(bottom = requireContext().toPx(24))
-
-            binding.results.addView(view)
+            val wordResultItemView = WordResultItemView(requireContext())
+            wordResultItemView.bind(index, answer)
+            binding.results.addView(wordResultItemView)
         }
     }
 

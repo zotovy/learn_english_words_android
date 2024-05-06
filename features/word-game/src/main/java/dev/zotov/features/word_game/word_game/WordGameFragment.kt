@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
@@ -183,7 +184,8 @@ class WordGameFragment : Fragment() {
         binding.correctBottomSheet.root.let {
             it.isVisible = true
             it.animate().setDuration(0).translationY(dy).alpha(0F).start()
-            it.animate().setDuration(150).translationY(0F).alpha(1F).start()
+            it.animate().setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150)
+                .translationY(0F).alpha(1F).start()
         }
     }
 
@@ -192,7 +194,7 @@ class WordGameFragment : Fragment() {
         binding.incorrectBottomSheet.root.let {
             it.isVisible = true
             it.animate().setDuration(0).translationY(dy).alpha(0F).start()
-            it.animate().setDuration(150).translationY(0F).alpha(1F).start()
+            it.animate().setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).translationY(0F).alpha(1F).start()
         }
     }
 
