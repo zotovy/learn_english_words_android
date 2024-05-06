@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
@@ -19,7 +18,6 @@ import dev.zotov.features.word_game.ui.GameProgressBarFragment
 import dev.zotov.features.word_game.ui.WordVariantView
 import dev.zotov.shared.navigation.DeepLinks
 import dev.zotov.ui.utils.capitalizeWord
-import dev.zotov.ui.utils.toPx
 import dev.zotov.words_data.models.Word
 
 @AndroidEntryPoint
@@ -60,11 +58,11 @@ class WordGameFragment : Fragment() {
             viewModel.skipQuestion()
         }
 
-        binding.correctBottomSheet.continueButton.setOnClickListener {
+        binding.correctBottomSheet.setOnContinueClickListener {
             viewModel.nextQuestion()
         }
 
-        binding.incorrectBottomSheet.continueButton.setOnClickListener {
+        binding.incorrectBottomSheet.setOnContinueClickListener {
             viewModel.nextQuestion()
         }
     }
@@ -96,20 +94,23 @@ class WordGameFragment : Fragment() {
                 navigateToResultPage()
             }
 
-            binding.correctBottomSheet.continueButton.setOnClickListener {
+            binding.correctBottomSheet.setOnContinueClickListener {
                 navigateToResultPage()
             }
 
-            binding.incorrectBottomSheet.continueButton.setOnClickListener {
+            binding.incorrectBottomSheet.setOnContinueClickListener {
                 navigateToResultPage()
             }
         }
 
         // Question state
         when (state.currentQuestionState) {
-            is WordVariantState.Correct -> showCorrectSheet()
-            is WordVariantState.InCorrect -> showIncorrectSheet()
-            is WordVariantState.Idle -> hideSheets()
+            is WordVariantState.Correct -> binding.correctBottomSheet.show()
+            is WordVariantState.InCorrect -> binding.incorrectBottomSheet.show()
+            is WordVariantState.Idle -> {
+                binding.correctBottomSheet.hide()
+                binding.incorrectBottomSheet.hide()
+            }
         }
 
         binding.progressBar.isVisible = false
@@ -177,30 +178,6 @@ class WordGameFragment : Fragment() {
                 wordVariantView.setOnClick { viewModel.selectVariant(word) }
             }
         }
-    }
-
-    private fun showCorrectSheet() {
-        val dy = requireContext().toPx(20).toFloat()
-        binding.correctBottomSheet.root.let {
-            it.isVisible = true
-            it.animate().setDuration(0).translationY(dy).alpha(0F).start()
-            it.animate().setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150)
-                .translationY(0F).alpha(1F).start()
-        }
-    }
-
-    private fun showIncorrectSheet() {
-        val dy = requireContext().toPx(20).toFloat()
-        binding.incorrectBottomSheet.root.let {
-            it.isVisible = true
-            it.animate().setDuration(0).translationY(dy).alpha(0F).start()
-            it.animate().setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).translationY(0F).alpha(1F).start()
-        }
-    }
-
-    private fun hideSheets() {
-        binding.correctBottomSheet.root.isVisible = false
-        binding.incorrectBottomSheet.root.isVisible = false
     }
 
     private fun navigateToResultPage() {

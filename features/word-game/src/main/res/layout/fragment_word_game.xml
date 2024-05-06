@@ -22,12 +22,12 @@
 
     <TextView
         android:id="@+id/target_word"
-        android:tag="targetWord"
         style="@style/text_H2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="72dp"
+        android:tag="targetWord"
         android:textColor="@color/gray_800"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,22 +99,18 @@
         tools:text="Какая-то ошибка"
         tools:visibility="invisible" />
 
-    <include
+    <dev.zotov.features.word_game.ui.CorrectBottomSheetView
         android:id="@+id/correct_bottom_sheet"
-        layout="@layout/layout_correct_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <include
+    <dev.zotov.features.word_game.ui.InCorrectBottomSheetView
         android:id="@+id/incorrect_bottom_sheet"
-        layout="@layout/layout_incorrect_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
