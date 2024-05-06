@@ -145,9 +145,8 @@ class WordGameFragment : Fragment() {
 
     private fun createWordVariantView(number: Int, word: Word) {
         val wordVariantView = WordVariantView(requireContext())
-        wordVariantView.bind(number, word, WordVariantState.Idle) {
-            viewModel.selectVariant(word)
-        }
+        wordVariantView.bind(number, word)
+        wordVariantView.setOnClick { viewModel.selectVariant(word) }
         variantsViews.add(wordVariantView)
         binding.wordsVariants.addView(wordVariantView)
     }
@@ -156,12 +155,25 @@ class WordGameFragment : Fragment() {
     private fun updateWordVariant(index: Int, word: Word, wordVariantState: WordVariantState) {
         val wordVariantView = variantsViews[index]
 
-        wordVariantView.bind(index, word, wordVariantState) {
-            when (wordVariantState) {
-                is WordVariantState.Correct,
-                is WordVariantState.InCorrect -> showWordInfoDialog(word.english)
+        when (wordVariantState) {
+            is WordVariantState.Correct -> {
+                wordVariantView.setOnClick { showWordInfoDialog(word.english) }
+                if (wordVariantState.word == word) {
+                    wordVariantView.changeState(WordVariantView.State.CORRECT)
+                }
+            }
 
-                is WordVariantState.Idle -> viewModel.selectVariant(word)
+            is WordVariantState.InCorrect -> {
+                wordVariantView.setOnClick { showWordInfoDialog(word.english) }
+                if (wordVariantState.word == word) {
+                    wordVariantView.changeState(WordVariantView.State.INCORRECT)
+                }
+            }
+
+            is WordVariantState.Idle -> {
+                wordVariantView.changeState(WordVariantView.State.IDLE)
+                wordVariantView.bind(index, word)
+                wordVariantView.setOnClick { viewModel.selectVariant(word) }
             }
         }
     }

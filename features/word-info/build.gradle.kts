@@ -46,9 +46,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.espresso.core)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
@@ -56,6 +53,14 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.retrofit.mockWebServer)
+    testImplementation(libs.mockito.ktx)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.ktx.coroutines.test)
+    testImplementation(libs.androidx.arch.test)
 
     implementation(project(":words-data"))
     implementation(project(":ui"))

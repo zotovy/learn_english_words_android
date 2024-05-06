@@ -76,9 +76,9 @@ class WordGameResultFragment : Fragment() {
                     text = russian.capitalizeWord()
 
                     val textColor = if (answer.correct) {
-                        ContextCompat.getColor(requireContext(), dev.zotov.ui.R.color.success_500)
+                        ContextCompat.getColor(context, dev.zotov.ui.R.color.success_500)
                     } else {
-                        ContextCompat.getColor(requireContext(), dev.zotov.ui.R.color.error_600)
+                        ContextCompat.getColor(context, dev.zotov.ui.R.color.error_600)
                     }
 
                     setTextColor(textColor)
