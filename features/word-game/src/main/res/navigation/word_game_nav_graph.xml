@@ -12,10 +12,6 @@
         <action
             android:id="@+id/action_wordGameFragment_to_wordGameResultFragment"
             app:destination="@id/wordGameResultFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpToInclusive="true"
             app:popUpTo="@id/wordGameFragment" />
     </fragment>
@@ -30,10 +26,6 @@
         <action
             android:id="@+id/action_wordGameResultFragment_to_wordGameFragment"
             app:destination="@id/wordGameFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpToInclusive="true"
             app:popUpTo="@id/wordGameResultFragment" />
     </fragment>

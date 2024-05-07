@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import dev.zotov.features.word_game.databinding.LayoutCorrectAnswerBinding
 import dev.zotov.ui.utils.toPx
 
@@ -26,6 +27,7 @@ class CorrectBottomSheetView @JvmOverloads constructor(
         super.onAttachedToWindow()
         y = dy
         alpha = 0F
+        isVisible = false
     }
 
     fun setOnContinueClickListener(onClick: () -> Unit) {
@@ -35,6 +37,7 @@ class CorrectBottomSheetView @JvmOverloads constructor(
     }
 
     fun show() {
+        isVisible = true
         animate().apply {
             setInterpolator(AccelerateDecelerateInterpolator())
             setDuration(150)
@@ -50,6 +53,9 @@ class CorrectBottomSheetView @JvmOverloads constructor(
             setDuration(150)
             translationY(dy)
             alpha(0F)
+            withEndAction {
+                isVisible = false
+            }
             start()
         }
     }

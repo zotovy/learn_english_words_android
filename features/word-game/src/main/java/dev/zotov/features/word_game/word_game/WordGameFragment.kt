@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
-import dev.zotov.features.word_game.R
 import dev.zotov.features.word_game.databinding.FragmentWordGameBinding
 import dev.zotov.features.word_game.ui.GameProgressBarFragment
 import dev.zotov.features.word_game.ui.WordVariantView
@@ -27,17 +25,19 @@ class WordGameFragment : Fragment() {
 
     private val viewModel: WordGameViewModel by viewModels()
 
-    private lateinit var sheetAnimation: Animation
-
     private var variantsViews = mutableListOf<WordVariantView>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X,  true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWordGameBinding.inflate(inflater)
-        sheetAnimation =
-            AnimationUtils.loadAnimation(requireContext(), R.anim.answer_sheet_animation)
         return binding.root
     }
 

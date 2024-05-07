@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.transition.MaterialSharedAxis
 import dev.zotov.features.word_game.databinding.FragmentWordGameResultBinding
 import dev.zotov.features.word_game.ui.WordResultItemView
 
@@ -17,6 +18,12 @@ class WordGameResultFragment : Fragment() {
 
     private var _binding: FragmentWordGameResultBinding? = null
     private val binding: FragmentWordGameResultBinding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
