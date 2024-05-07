@@ -1,5 +1,6 @@
 package dev.zotov.features.word_info.word_info_dialog
 
+import android.annotation.SuppressLint
 import android.app.ActionBar.LayoutParams
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import dev.zotov.ui.utils.toPx
 internal class WordMeaningsAdapter :
     RecyclerView.Adapter<WordMeaningsAdapter.WordMeaningViewHolder>() {
     var meanings: List<WordMeaningUiModel> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
         set(newValue) {
             field = newValue
             notifyDataSetChanged()
