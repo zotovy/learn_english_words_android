@@ -21,7 +21,7 @@ class CorrectBottomSheetView @JvmOverloads constructor(
         true,
     )
 
-    private val dy = context.toPx(40).toFloat()
+    private val dy = 40.toPx().toFloat()
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()

@@ -48,6 +48,6 @@ internal class WordResultItemView @JvmOverloads constructor(
             }
         }
 
-        binding.root.setMargin(bottom = context.toPx(24))
+        binding.root.setMargin(bottom = 24.toPx())
     }
 }

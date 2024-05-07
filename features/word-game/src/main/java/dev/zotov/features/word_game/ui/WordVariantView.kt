@@ -56,7 +56,7 @@ internal class WordVariantView @JvmOverloads constructor(
             )
         )
         variantTextView.setTextColor(ContextCompat.getColor(context, dev.zotov.ui.R.color.gray_700))
-        binding.root.setMargin(bottom = context.toPx(16))
+        binding.root.setMargin(bottom = 16.toPx())
     }
 
     fun setOnClick(onClick: () -> Unit) {
@@ -96,7 +96,7 @@ internal class WordVariantView @JvmOverloads constructor(
 
         strokeAnimator?.cancel()
         strokeAnimator = animateColorChange(strokeColor, color) {
-            containerBg.setStroke(context.toPx(1), it)
+            containerBg.setStroke(1.toPx(), it)
         }
     }
 

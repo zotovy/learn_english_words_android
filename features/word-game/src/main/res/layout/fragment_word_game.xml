@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     tools:context="dev.zotov.features.word_game.word_game.WordGameFragment">
 
-    <androidx.fragment.app.FragmentContainerView
+    <dev.zotov.features.word_game.ui.ProgressBarView
         android:id="@+id/game_progress_bar"
-        android:name="dev.zotov.features.word_game.ui.GameProgressBarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
         android:visibility="gone"
-        app:itemCount="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

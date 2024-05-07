@@ -44,7 +44,7 @@ internal class WordMeaningsAdapter :
                     LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT,
                 ).apply {
-                    setMargins(0, 0, 0, context.toPx(marginBottom))
+                    setMargins(0, 0, 0, marginBottom.toPx())
                 }
 
                 meaningsContainer.addView(definitionView)

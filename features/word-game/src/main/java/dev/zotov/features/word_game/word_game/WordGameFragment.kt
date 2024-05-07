@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zotov.features.word_game.databinding.FragmentWordGameBinding
-import dev.zotov.features.word_game.ui.GameProgressBarFragment
 import dev.zotov.features.word_game.ui.WordVariantView
 import dev.zotov.shared.navigation.DeepLinks
 import dev.zotov.ui.utils.capitalizeWord
@@ -70,8 +69,7 @@ class WordGameFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun handleIdleState(state: WordGameState.Idle) {
         // Game progress bar
-        binding.gameProgressBar.getFragment<GameProgressBarFragment>()
-            .setActiveIndex(state.currentQuestionIndex)
+        binding.gameProgressBar.changeActiveIndex(state.currentQuestionIndex)
 
         // Target word
         state.currentQuestion.targetWord.let {
