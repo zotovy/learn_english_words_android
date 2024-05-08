@@ -41,7 +41,6 @@ class WordDefinitionTest {
     fun testWordDefinition() = runTest {
         whenever(wordDao.getRandomWords(4))
             .thenReturn(WordsTestData.Dbos.part1())
-            .thenReturn(WordsTestData.Dbos.part2())
 
         whenever(wordDefinitionDao.getWordDefinition(any()))
             .thenReturn(emptyList())

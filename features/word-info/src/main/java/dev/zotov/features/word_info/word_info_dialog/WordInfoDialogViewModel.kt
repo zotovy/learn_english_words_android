@@ -9,15 +9,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zotov.features.word_info.utils.toUiModel
 import dev.zotov.shared.services.SoundPlayerService
 import dev.zotov.words_data.WordsRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 internal class WordInfoDialogViewModel @Inject constructor(
     private val wordsRepository: WordsRepository,
     private val soundPlayerService: SoundPlayerService,
+    @Named("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private var _state = MutableLiveData<WordInfoDialogState>(WordInfoDialogState.Loading)
@@ -25,9 +28,11 @@ internal class WordInfoDialogViewModel @Inject constructor(
 
     fun initialize(word: String) {
         viewModelScope.launch {
-            val wordDefinition = withContext(Dispatchers.IO) {
+            val wordDefinition = withContext(ioDispatcher) {
                 wordsRepository.getWordDefinition(word)
             }
+
+//            val wordDefinition = wordsRepository.getWordDefinition(word)
 
             if (wordDefinition == null) {
                 _state.value = WordInfoDialogState.Error(

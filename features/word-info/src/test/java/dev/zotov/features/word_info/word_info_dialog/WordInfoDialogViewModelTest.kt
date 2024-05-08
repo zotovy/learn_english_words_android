@@ -7,6 +7,7 @@ import dev.zotov.features.word_info.word_info_dialog.utils.getOrAwaitValueTest
 import dev.zotov.shared.services.SoundPlayerServiceImpl
 import dev.zotov.words_data.WordsRepositoryImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -15,15 +16,15 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
+import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class)
 class WordInfoDialogViewModelTest {
-
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -33,9 +34,14 @@ class WordInfoDialogViewModelTest {
 
     private lateinit var viewModel: WordInfoDialogViewModel
 
+    private val testDispatcher = StandardTestDispatcher()
+
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule(testDispatcher)
+
     @Before
     fun setup() {
-        viewModel = WordInfoDialogViewModel(wordsRepository, soundPlayerService)
+        viewModel = WordInfoDialogViewModel(wordsRepository, soundPlayerService, testDispatcher)
     }
 
     @After

@@ -15,7 +15,10 @@ import dev.zotov.shared.services.SoundPlayerServiceImpl
 import dev.zotov.words_api.WordsApi
 import dev.zotov.words_data.WordsRepository
 import dev.zotov.words_data.WordsRepositoryImpl
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Named
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -57,4 +60,8 @@ object AppModule {
     fun providesSoundDataStore(applicationContext: Application): SoundDataStore {
         return SoundDataStoreImpl(applicationContext)
     }
+
+    @Provides
+    @Named("IO")
+    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }
