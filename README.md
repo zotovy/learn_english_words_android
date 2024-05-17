@@ -50,7 +50,7 @@ To run **UI** test, use Android Studio
 
 ## License
 
-[MIT](License.md)
+[MIT](LICENSE.md)
 
 
 ## Authors
