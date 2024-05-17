@@ -36,10 +36,6 @@ Clone this repository and import into **Android Studio**
 
 No additional configurations required
 
-## License
-
-[MIT](License.md)
-
 
 ## Running Tests
 
@@ -50,6 +46,11 @@ To run unit tests, run the following command
 ```
 
 To run **UI** test, use Android Studio
+
+
+## License
+
+[MIT](License.md)
 
 
 ## Authors
